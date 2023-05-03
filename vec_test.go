@@ -1,6 +1,9 @@
 package vec
 
-import "testing"
+import (
+	"strconv"
+	"testing"
+)
 
 func TestFilterInts(t *testing.T) {
 	testCases := []struct {
@@ -107,13 +110,13 @@ func TestMapInts(t *testing.T) {
 		name   string
 		input  Vec[int]
 		output Vec[int]
-		fn     func(i int) int
+		fn     func(i int, index int) int
 	}{
 		{
 			name:   "square",
 			input:  Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 			output: Vec[int]{0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100},
-			fn: func(i int) int {
+			fn: func(i int, index int) int {
 				return i * i
 			},
 		},
@@ -121,8 +124,16 @@ func TestMapInts(t *testing.T) {
 			name:   "empty input, empty output",
 			input:  Vec[int]{},
 			output: Vec[int]{},
-			fn: func(i int) int {
+			fn: func(i int, index int) int {
 				return i * i
+			},
+		},
+		{
+			name:   "index sanity check",
+			input:  Vec[int]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+			output: Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+			fn: func(i int, index int) int {
+				return index
 			},
 		},
 	}
@@ -149,13 +160,13 @@ func TestMapString(t *testing.T) {
 		name   string
 		input  Vec[string]
 		output Vec[string]
-		fn     func(i string) string
+		fn     func(i string, index int) string
 	}{
 		{
 			name:   "Make cooler",
 			input:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
 			output: Vec[string]{"0ice", "1ice", "2ice", "3ice", "4ice", "5ice", "6ice", "7ice", "8ice", "9ice", "10ice"},
-			fn: func(s string) string {
+			fn: func(s string, index int) string {
 				return s + "ice"
 			},
 		},
@@ -163,8 +174,16 @@ func TestMapString(t *testing.T) {
 			name:   "empty input, empty output",
 			input:  Vec[string]{},
 			output: Vec[string]{},
-			fn: func(s string) string {
+			fn: func(s string, index int) string {
 				return s + "ice"
+			},
+		},
+		{
+			name:   "index sanity check",
+			input: Vec[string]{"0ice", "1ice", "2ice", "3ice", "4ice", "5ice", "6ice", "7ice", "8ice", "9ice", "10ice"},
+			output:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+			fn: func(s string, index int) string {
+				return strconv.Itoa(index)
 			},
 		},
 	}

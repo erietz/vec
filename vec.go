@@ -12,10 +12,16 @@ func (vec Vec[T]) Filter(fn func(t T) bool) Vec[T] {
 	return newVec
 }
 
-func (vec Vec[T]) Map(fn func(t T) T) Vec[T] {
+// Calls the callback function, fn, on each element of the vector and returns a
+// new vector that contains the results
+//
+// {fn}: The callback function
+//
+// {index}: The index of the current element being processed in the vector
+func (vec Vec[T]) Map(fn func(t T, index int) T) Vec[T] {
 	newVec := Vec[T]{}
-	for _, v := range vec {
-		newVec = append(newVec, fn(v))
+	for i, v := range vec {
+		newVec = append(newVec, fn(v, i))
 	}
 	return newVec
 }
