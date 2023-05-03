@@ -110,16 +110,16 @@ func TestMapInts(t *testing.T) {
 		fn     func(i int) int
 	}{
 		{
-			name: "square",
-			input: Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+			name:   "square",
+			input:  Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 			output: Vec[int]{0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100},
 			fn: func(i int) int {
 				return i * i
 			},
 		},
 		{
-			name: "empty input, empty output",
-			input: Vec[int]{},
+			name:   "empty input, empty output",
+			input:  Vec[int]{},
 			output: Vec[int]{},
 			fn: func(i int) int {
 				return i * i
@@ -152,16 +152,16 @@ func TestMapString(t *testing.T) {
 		fn     func(i string) string
 	}{
 		{
-			name: "Make cooler",
-			input: Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+			name:   "Make cooler",
+			input:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
 			output: Vec[string]{"0ice", "1ice", "2ice", "3ice", "4ice", "5ice", "6ice", "7ice", "8ice", "9ice", "10ice"},
 			fn: func(s string) string {
 				return s + "ice"
 			},
 		},
 		{
-			name: "empty input, empty output",
-			input: Vec[string]{},
+			name:   "empty input, empty output",
+			input:  Vec[string]{},
 			output: Vec[string]{},
 			fn: func(s string) string {
 				return s + "ice"
