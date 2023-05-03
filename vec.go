@@ -2,10 +2,10 @@ package vec
 
 type Vec[T any] []T
 
-func (vec Vec[T]) Filter(fn func(t T) bool) Vec[T] {
+func (vec Vec[T]) Filter(fn func(t T, index int) bool) Vec[T] {
 	newVec := Vec[T]{}
-	for _, v := range vec {
-		if fn(v) {
+	for i, v := range vec {
+		if fn(v, i) {
 			newVec = append(newVec, v)
 		}
 	}

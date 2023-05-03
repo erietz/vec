@@ -10,13 +10,13 @@ func TestFilterInts(t *testing.T) {
 		name   string
 		input  Vec[int]
 		output Vec[int]
-		fn     func(i int) bool
+		fn     func(i int, index int) bool
 	}{
 		{
 			name:   "is even",
 			input:  Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15},
 			output: Vec[int]{0, 2, 4, 6, 8, 10, 12, 14},
-			fn: func(i int) bool {
+			fn: func(i int, index int) bool {
 				return i%2 == 0
 			},
 		},
@@ -24,7 +24,7 @@ func TestFilterInts(t *testing.T) {
 			name:   "is odd",
 			input:  Vec[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15},
 			output: Vec[int]{1, 3, 5, 7, 9, 11, 13, 15},
-			fn: func(i int) bool {
+			fn: func(i int, index int) bool {
 				return i%2 != 0
 			},
 		},
@@ -32,8 +32,16 @@ func TestFilterInts(t *testing.T) {
 			name:   "empty input, empty output",
 			input:  Vec[int]{},
 			output: Vec[int]{},
-			fn: func(i int) bool {
+			fn: func(i int, index int) bool {
 				return i%2 != 0
+			},
+		},
+		{
+			name:   "index sanity check",
+			input:  Vec[int]{321, 1, 2, 3, 4, 5, 6, 123},
+			output: Vec[int]{321, 123},
+			fn: func(i int, index int) bool {
+				return index == 0 || index == 7
 			},
 		},
 	}
@@ -60,13 +68,13 @@ func TestFilterString(t *testing.T) {
 		name   string
 		input  Vec[string]
 		output Vec[string]
-		fn     func(i string) bool
+		fn     func(i string, index int) bool
 	}{
 		{
 			name:   "is even",
 			input:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7"},
 			output: Vec[string]{"0", "2", "4", "6"},
-			fn: func(i string) bool {
+			fn: func(i string, index int) bool {
 				return i == "0" || i == "2" || i == "4" || i == "6"
 			},
 		},
@@ -74,7 +82,7 @@ func TestFilterString(t *testing.T) {
 			name:   "is odd",
 			input:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7"},
 			output: Vec[string]{"1", "3", "5", "7"},
-			fn: func(i string) bool {
+			fn: func(i string, index int) bool {
 				return i == "1" || i == "3" || i == "5" || i == "7"
 			},
 		},
@@ -82,8 +90,16 @@ func TestFilterString(t *testing.T) {
 			name:   "empty input, empty output",
 			input:  Vec[string]{},
 			output: Vec[string]{},
-			fn: func(i string) bool {
+			fn: func(i string, index int) bool {
 				return i == "potato"
+			},
+		},
+		{
+			name:   "index sanity check",
+			input:  Vec[string]{"first", "1", "2", "3", "4", "5", "6", "last"},
+			output: Vec[string]{"first", "last"},
+			fn: func(i string, index int) bool {
+				return index == 0 || index == 7
 			},
 		},
 	}
@@ -180,8 +196,8 @@ func TestMapString(t *testing.T) {
 		},
 		{
 			name:   "index sanity check",
-			input: Vec[string]{"0ice", "1ice", "2ice", "3ice", "4ice", "5ice", "6ice", "7ice", "8ice", "9ice", "10ice"},
-			output:  Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+			input:  Vec[string]{"0ice", "1ice", "2ice", "3ice", "4ice", "5ice", "6ice", "7ice", "8ice", "9ice", "10ice"},
+			output: Vec[string]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
 			fn: func(s string, index int) string {
 				return strconv.Itoa(index)
 			},
